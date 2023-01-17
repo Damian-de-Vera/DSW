@@ -12,10 +12,15 @@ class CommunityLinkController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        return view('community/index');
+        $links = CommunityLink::paginate(25);
+        return view('community/index', compact('links'));
     }
+
+
+
 
     /**
      * Show the form for creating a new resource.
