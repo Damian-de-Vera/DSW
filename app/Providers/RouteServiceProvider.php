@@ -26,6 +26,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        Route::pattern('numero', '[0-9]+');
+
+        Route::pattern('letra', '[a-z]+');
+
         $this->configureRateLimiting();
 
         $this->routes(function () {
