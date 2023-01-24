@@ -40,7 +40,11 @@ class CommunityLinkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $this->validate($request, [
+            'title' => 'required',
+            'link' => 'required|active_url'
+        ]);
     }
 
     /**
