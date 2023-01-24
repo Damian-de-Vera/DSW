@@ -9,8 +9,8 @@ class Channel extends Model
 {
     use HasFactory;
 
-
+    public $timestamps = false;
     protected $fillable = [
-        'user_id', 'channel_id', 'title', 'link', 'approved'
+        'id', 'title', 'slug', 'color', 'timestamps'
     ];
 }
