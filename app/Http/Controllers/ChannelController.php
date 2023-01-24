@@ -3,29 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Channel;
-use App\Models\CommunityLink;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class CommunityLinkController extends Controller
+class ChannelController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index()
     {
-
-        $channels = Channel::orderBy('title', 'asc')->get();
-
-        $links = CommunityLink::paginate(25);
-        return view('community/index', compact('links'));
+        //
     }
-
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -45,29 +35,16 @@ class CommunityLinkController extends Controller
      */
     public function store(Request $request)
     {
-
-
-        request()->merge([
-            'user_id' => Auth::id(),
-            'channel_id' => 'required|exists:channels,id'
-        ]);
-        CommunityLink::create($request->all());
-        return back();
-
-
-        $this->validate($request, [
-            'title' => 'required',
-            'link' => 'required|active_url'
-        ]);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CommunityLink  $communityLink
+     * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function show(CommunityLink $communityLink)
+    public function show(Channel $channel)
     {
         //
     }
@@ -75,10 +52,10 @@ class CommunityLinkController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CommunityLink  $communityLink
+     * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function edit(CommunityLink $communityLink)
+    public function edit(Channel $channel)
     {
         //
     }
@@ -87,10 +64,10 @@ class CommunityLinkController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CommunityLink  $communityLink
+     * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CommunityLink $communityLink)
+    public function update(Request $request, Channel $channel)
     {
         //
     }
@@ -98,10 +75,10 @@ class CommunityLinkController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CommunityLink  $communityLink
+     * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CommunityLink $communityLink)
+    public function destroy(Channel $channel)
     {
         //
     }
