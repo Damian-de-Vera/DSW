@@ -17,12 +17,9 @@ class ChannelFactory extends Factory
     public function definition()
     {
         return [
-
-            'id' => \App\Models\User::all()->random()->id,
             'title' => $this->faker->sentence,
             'slug' => $this->faker->slug(),
             'color' => $this->faker->hexcolor(),
-            'timestamps' => $this->faker->dateTime()
         ];
     }
 }

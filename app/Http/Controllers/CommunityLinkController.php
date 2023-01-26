@@ -21,7 +21,7 @@ class CommunityLinkController extends Controller
         $channels = Channel::orderBy('title', 'asc')->get();
 
         $links = CommunityLink::paginate(25);
-        return view('community/index', compact('links'));
+        return view('community/index', compact('links', 'channels'));
     }
 
 
@@ -46,19 +46,21 @@ class CommunityLinkController extends Controller
     public function store(Request $request)
     {
 
+        $this->validate($request, [
+            'title' => 'required',
+            'link' => 'required|active_url',
+            'channel_id' => 'required|exists:channels,id',
+            'link' => 'required|active_url|unique:community_links'
+
+        ]);
 
         request()->merge([
             'user_id' => Auth::id(),
-            'channel_id' => 'required|exists:channels,id'
+
+
         ]);
         CommunityLink::create($request->all());
         return back();
-
-
-        $this->validate($request, [
-            'title' => 'required',
-            'link' => 'required|active_url'
-        ]);
     }
 
     /**
