@@ -18,10 +18,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/200', function () {
+    return response('Respuesta', 200);
+});
+
+Route::get('/400', function () {
+    return response('Error', 400);
+});
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('community', [App\Http\Controllers\CommunityLinkController::class, 'index'])->middleware(['auth', 'verified'])->name('community');
+Route::post('community', [App\Http\Controllers\CommunityLinkController::class, 'store'])->middleware(['auth', 'verified'])->name('community');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
