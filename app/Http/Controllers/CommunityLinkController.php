@@ -60,20 +60,13 @@ class CommunityLinkController extends Controller
         ]);
 
 
-
-
-        request()->merge([
-            'user_id' => Auth::id(),
-
-
-        ]);
         CommunityLink::create($request->all());
         if ($approved == true) {
 
             return back()->with('success', 'Se ha añadido correctamente!');
         } else {
-            return redirect()->route('home')
-                ->with('warning', "Don't Open this link");
+            return redirect()->route('community')
+                ->with('warning', "Para subir el link tienes que estar verificado");
         }
     }
 
