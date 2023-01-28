@@ -15,6 +15,7 @@ class CommunityLinkController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+
     public function index()
     {
 
@@ -33,9 +34,9 @@ class CommunityLinkController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
+
     {
-        //
     }
 
     /**
@@ -47,6 +48,9 @@ class CommunityLinkController extends Controller
     public function store(Request $request)
     {
 
+        $approved = Auth::user()->trusted ? true : false;
+        request()->merge(['user_id' => Auth::id(), 'approved' => $approved]);
+
         $this->validate($request, [
             'title' => 'required',
             'link' => 'required|active_url',
@@ -55,13 +59,22 @@ class CommunityLinkController extends Controller
 
         ]);
 
+
+
+
         request()->merge([
             'user_id' => Auth::id(),
 
 
         ]);
         CommunityLink::create($request->all());
-        return back();
+        if ($approved == true) {
+
+            return back()->with('success', 'Se ha añadido correctamente!');
+        } else {
+            return redirect()->route('home')
+                ->with('warning', "Don't Open this link");
+        }
     }
 
     /**

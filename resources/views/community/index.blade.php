@@ -10,6 +10,11 @@
     <div class="row">
         <div class="col-md-8">
             <h1>Community</h1>
+
+            @if(count($links) == 0)
+            <h2>No contributions yet</h2>
+
+            @endif
             @foreach ($links as $link)
             <li>
 

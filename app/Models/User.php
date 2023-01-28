@@ -14,6 +14,12 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function isTrusted()
+    {
+        $trusted = true;
+        return $trusted;
+    }
+
     /**
      * The attributes that are mass assignable.
      *
