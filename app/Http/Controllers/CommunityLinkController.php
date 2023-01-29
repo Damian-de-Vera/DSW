@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommunityLinkForm;
 use App\Models\Channel;
 use App\Models\CommunityLink;
 use Illuminate\Http\Request;
@@ -21,10 +22,11 @@ class CommunityLinkController extends Controller
 
         $channels = Channel::orderBy('title', 'asc')->get();
 
-        $links = CommunityLink::where('approved', 1)->paginate(25);
+        $links = CommunityLink::where('approved', true)->latest('updated_at')->paginate(25);
 
         return view('community/index', compact('links', 'channels'));
     }
+
 
 
 
@@ -45,25 +47,23 @@ class CommunityLinkController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CommunityLinkForm $request)
     {
 
         $approved = Auth::user()->trusted ? true : false;
-        request()->merge(['user_id' => Auth::id(), 'approved' => $approved]);
-
-        $this->validate($request, [
-            'title' => 'required',
-            'link' => 'required|active_url',
-            'channel_id' => 'required|exists:channels,id',
-            'link' => 'required|active_url|unique:community_links'
-
-        ]);
+        $request->merge(['user_id' => Auth::id(), 'approved' => $approved]);
 
 
-        CommunityLink::create($request->all());
+
         if ($approved == true) {
+            if (CommunityLink::hasAlreadyBeenSubmitted($request['link']) == true) {
+                CommunityLink::hasAlreadyBeenSubmitted($request['link']);
+                return back()->with('success', 'Se ha actualizado correctamente!');
+            } else {
 
-            return back()->with('success', 'Se ha añadido correctamente!');
+                CommunityLink::create($request->all());
+                return back()->with('success', 'Se ha añadido correctamente!');
+            }
         } else {
             return redirect()->route('community')
                 ->with('warning', "Para subir el link tienes que estar verificado");
