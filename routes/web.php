@@ -32,6 +32,10 @@ Route::get('/dashboard', function () {
 Route::get('community', [App\Http\Controllers\CommunityLinkController::class, 'index'])->middleware(['auth', 'verified'])->name('community');
 Route::post('community', [App\Http\Controllers\CommunityLinkController::class, 'store'])->middleware(['auth', 'verified'])->name('community');
 
+
+Route::get('community/{channel}', [App\Http\Controllers\CommunityLinkController::class, 'index'])
+    ->middleware(['auth', 'verified'])->name('community');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

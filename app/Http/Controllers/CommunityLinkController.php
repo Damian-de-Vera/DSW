@@ -17,7 +17,7 @@ class CommunityLinkController extends Controller
      */
 
 
-    public function index()
+    public function index(Channel $channel = null)
     {
 
         $channels = Channel::orderBy('title', 'asc')->get();
@@ -50,14 +50,18 @@ class CommunityLinkController extends Controller
     public function store(CommunityLinkForm $request)
     {
 
-        $approved = Auth::user()->trusted ? true : false;
+        $approved = Auth::user()->isTrusted();
         $request->merge(['user_id' => Auth::id(), 'approved' => $approved]);
 
 
 
-        if ($approved == true) {
-            if (CommunityLink::hasAlreadyBeenSubmitted($request['link']) == true) {
-                CommunityLink::hasAlreadyBeenSubmitted($request['link']);
+        if ($approved) {
+
+            $link = new CommunityLink();
+            $link->user_id = Auth::id();
+            $linkSubmitted = $link->hasAlreadyBeenSubmitted($request->link);
+
+            if ($linkSubmitted) {
                 return back()->with('success', 'Se ha actualizado correctamente!');
             } else {
 

@@ -18,7 +18,7 @@ class CommunityLink extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    protected static function hasAlreadyBeenSubmitted($link)
+    public static function hasAlreadyBeenSubmitted($link)
     {
         if ($existing = static::where('link', $link)->first()) {
             $existing->touch();

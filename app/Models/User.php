@@ -16,8 +16,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isTrusted()
     {
-        $trusted = true;
-        return $trusted;
+
+        return  $this->trusted;
     }
 
     /**

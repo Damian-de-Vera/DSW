@@ -8,7 +8,7 @@
             {{ $link->channel->title }}
         </span>
 
-        <a class="margin-a" href="{{$link->link}}" target="_blank">
+        <a class="margin-a" href="/community/{{ $link->channel->slug }}" target="_blank">
             {{$link->title}}
         </a>
         <small>Contributed by: {{$link->creator->name}} {{$link->updated_at->diffForHumans()}}</small>
