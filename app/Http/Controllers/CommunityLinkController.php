@@ -21,10 +21,16 @@ class CommunityLinkController extends Controller
     {
 
         $channels = Channel::orderBy('title', 'asc')->get();
+        if ($channel) {
+            $links = CommunityLink::join('channels', 'community_links.channel_id', '=', 'channels.id')
+                ->where('approved', true)->where("channels.slug", $channel["slug"])->latest('community_links.updated_at')
+                ->paginate(25);
+            return view('community/index', compact('links', 'channels'));
+        } else {
 
-        $links = CommunityLink::where('approved', true)->latest('updated_at')->paginate(25);
-
-        return view('community/index', compact('links', 'channels'));
+            $links = CommunityLink::where('approved', true)->latest('updated_at')->paginate(25);
+            return view('community/index', compact('links', 'channels'));
+        }
     }
 
 
@@ -50,7 +56,7 @@ class CommunityLinkController extends Controller
     public function store(CommunityLinkForm $request)
     {
 
-        $approved = Auth::user()->isTrusted();
+        $approved = Auth::user()->trusted ? true : false;
         $request->merge(['user_id' => Auth::id(), 'approved' => $approved]);
 
 
