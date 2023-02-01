@@ -21,14 +21,16 @@ class CommunityLinkController extends Controller
     {
         $channels = Channel::orderBy('title', 'asc')->get();
         if ($channel) {
+            $token = 1;
+
             $links = CommunityLink::join('channels', 'community_links.channel_id', '=', 'channels.id')
                 ->where('approved', true)->where("channels.slug", $channel["slug"])->latest('community_links.updated_at')
                 ->paginate(25);
-            return view('community/index', compact('links', 'channels'));
+            return view('community/index', compact('links', 'channels', 'token'));
         } else {
-
+            $token = 0;
             $links = CommunityLink::where('approved', true)->latest('updated_at')->paginate(25);
-            return view('community/index', compact('links', 'channels'));
+            return view('community/index', compact('links', 'channels', 'token'));
         }
     }
 
