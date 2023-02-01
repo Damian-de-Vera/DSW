@@ -19,7 +19,6 @@ class CommunityLinkController extends Controller
 
     public function index(Channel $channel = null)
     {
-
         $channels = Channel::orderBy('title', 'asc')->get();
         if ($channel) {
             $links = CommunityLink::join('channels', 'community_links.channel_id', '=', 'channels.id')
