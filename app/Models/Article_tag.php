@@ -5,12 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Writer extends Model
+class Article_tag extends Model
 {
     use HasFactory;
-
-    public function articles()
-    {
-        return $this->hasMany(Article::class);
-    }
 }

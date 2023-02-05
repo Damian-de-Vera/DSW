@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('articles', function (Blueprint $table) {
-            $table->id();
-            $table->string("name");
-            $table->unsignedBigInteger('writer_id'); //Foránea
+        Schema::create('article_tags', function (Blueprint $table) {
+            $table->unsignedBigInteger('article_id'); //Foránea
+            $table->unsignedBigInteger('tag_id'); //Foránea
 
-            $table->foreign('writer_id')->references('id')->on('writers')->onDelete('cascade');
-            $table->timestamps();
+            $table->foreign('article_id')->references('id')->on('articles');
+            $table->foreign('tag_id')->references('id')->on('tags');
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('articles');
+        Schema::dropIfExists('article_tags');
     }
 };

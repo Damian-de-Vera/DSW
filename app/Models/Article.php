@@ -12,6 +12,15 @@ class Article extends Model
 
     public function writer()
     {
-        return $this->belongsTo('App\Writer');
+        return $this->belongsTo(Writer::class, 'writer_id');
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag');
+    }
+
+    protected $fillable = [
+        'name', "writer_id"
+    ];
 }

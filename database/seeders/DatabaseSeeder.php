@@ -4,9 +4,11 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Article;
 use App\Models\Channel;
 use App\Models\CommunityLink;
 use App\Models\User;
+use App\Models\Writer;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -29,7 +31,9 @@ class DatabaseSeeder extends Seeder
         DB::delete('delete from community_links');
         DB::delete('delete from channels');
         DB::delete('delete from users');
+        DB::delete('delete from writers');
 
+        Writer::factory()->count(3)->create();
         User::factory()->count(5)->create();
         Channel::factory()->count(5)->create();
         CommunityLink::factory()->count(50)->create();
