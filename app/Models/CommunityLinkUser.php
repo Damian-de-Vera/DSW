@@ -14,6 +14,6 @@ class CommunityLinkUser extends Model
     ];
     public function users()
     {
-        return $this->belongsToMany(User::class, 'community_links_users');
+        return $this->belongsToMany(User::class, 'community_link_users');
     }
 }
