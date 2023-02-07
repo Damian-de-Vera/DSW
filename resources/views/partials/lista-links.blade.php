@@ -16,6 +16,7 @@
         </a>
 
         <small>Contributed by: {{$link->creator->name}} {{$link->updated_at->diffForHumans()}}</small>
+        {{$link->users()->count()}}
     </li>
 </div>
 @endforeach
