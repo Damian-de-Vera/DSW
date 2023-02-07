@@ -43,6 +43,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('votes/{link}', [App\Http\Controllers\CommunityLinkController::class, 'store'])
+    ->middleware(['auth', 'verified'])->name('community');
+
 Route::get('/consultas', function () {
     return   DB::table('users')->where('id', 3)
         ->delete();

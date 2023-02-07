@@ -1,5 +1,6 @@
 @foreach ($links as $link)
 
+
 <div class=" link">
     <li>
 
@@ -16,7 +17,14 @@
         </a>
 
         <small>Contributed by: {{$link->creator->name}} {{$link->updated_at->diffForHumans()}}</small>
-        {{$link->users()->count()}}
+
+        <form method="POST" action="/votes/{{ $link->id }}">
+            {{ csrf_field() }}
+            <button type="button" class="btn btn-secondary 
+{{ Auth::check() && Auth::user()->votedFor($link) ? 'btn-success' : 'btn-secondary' }}" " {{ Auth::guest() ? 'disabled' : '' }}>
+                {{$link->users()->count()}}
+            </button>
+        </form>
     </li>
 </div>
 @endforeach
