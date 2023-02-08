@@ -18,9 +18,9 @@
 
         <small>Contributed by: {{$link->creator->name}} {{$link->updated_at->diffForHumans()}}</small>
 
-        <form method="POST" action="/votes/{{ $link->id }}">
+        <form method="POST" action="/community/votes/{{ $link->id }}">
             {{ csrf_field() }}
-            <button type="button" class="btn btn-secondary 
+            <button type="submit" class="btn btn-secondary 
 {{ Auth::check() && Auth::user()->votedFor($link) ? 'btn-success' : 'btn-secondary' }}" " {{ Auth::guest() ? 'disabled' : '' }}>
                 {{$link->users()->count()}}
             </button>

@@ -12,12 +12,22 @@ class CommunityLinkUserController extends Controller
 
     public function store(CommunityLink $link)
     {
-        $vote = CommunityLinkUser::firstOrNew(['user_id' => Auth::id(), 'community_link_id' => $link->id]);
+
+        $vote =  CommunityLinkUser::firstOrNew([
+            'user_id' => Auth::id(),
+            'community_link_id' => $link->id
+        ]);
+        $this->toggle($vote);
+
+        return back();
+    }
+
+    public function toggle($vote)
+    {
         if ($vote->id) {
             $vote->delete();
         } else {
             $vote->save();
         }
-        return back();
     }
 }
