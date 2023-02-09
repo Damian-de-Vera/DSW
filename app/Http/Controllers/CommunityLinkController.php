@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CommunityLinkForm;
 use App\Models\Channel;
 use App\Models\CommunityLink;
+use App\Models\CommunityLinkUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,20 +20,39 @@ class CommunityLinkController extends Controller
 
     public function index(Channel $channel = null)
     {
+
+
+
         $channels = Channel::orderBy('title', 'asc')->get();
         if ($channel) {
             $token = 1;
 
-            $links = $channel->communitylinks()->where('approved', true)->latest('community_links.updated_at')
-                ->paginate(25);
             /* $links = CommunityLink::join('channels', 'community_links.channel_id', '=', 'channels.id')
                 ->where('approved', true)->where("channels.slug", $channel["slug"])->latest('community_links.updated_at')
                 ->paginate(25);*/
-            return view('community/index', compact('links', 'channels', 'token'));
+            if (request()->exists('popular')) {
+
+                $links = $channel->communitylinks()->where('approved', true)->withCount('users')->orderBy('users_count', 'desc')->paginate(25);
+
+                return view('community/index', compact('links', 'channels', 'token'));
+            } else {
+
+                $links = $channel->communitylinks()->where('approved', true)->latest('community_links.updated_at')
+                    ->paginate(25);
+                return view('community/index', compact('links', 'channels', 'token'));
+            }
         } else {
             $token = 0;
-            $links = CommunityLink::where('approved', true)->latest('updated_at')->paginate(25);
-            return view('community/index', compact('links', 'channels', 'token'));
+            if (request()->exists('popular')) {
+
+                $links = CommunityLink::where('approved', true)->withCount('users')->orderBy('users_count', 'desc')->paginate(25);
+
+                return view('community/index', compact('links', 'channels', 'token'));
+            } else {
+                $links = CommunityLink::where('approved', true)->latest('updated_at')->paginate(25);
+
+                return view('community/index', compact('links', 'channels', 'token'));
+            }
         }
     }
 
@@ -78,8 +98,9 @@ class CommunityLinkController extends Controller
                 return back()->with('success', 'Se ha añadido correctamente!');
             }
         } else {
+            CommunityLink::create($request->all());
             return redirect()->route('community')
-                ->with('warning', "Para subir el link tienes que estar verificado");
+                ->with('warning', "Hsta que no estes verificado no puedes ver el link");
         }
     }
 

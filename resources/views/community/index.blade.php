@@ -1,4 +1,5 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+
 @extends('layouts.app')
 
 @section('content')
@@ -24,6 +25,7 @@
             <h2>No contributions yet</h2>
 
             @endif
+
             @include('partials.lista-links')
 
 
