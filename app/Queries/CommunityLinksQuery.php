@@ -27,7 +27,7 @@ class CommunityLinksQuery
 
     public function getMostPopular()
     {
-        $result = CommunityLink::where('approved', true)->withCount('users')->orderBy('users_count', 'desc')->paginate(25);
+        $result = CommunityLink::withCount('users')->orderBy('users_count', 'desc')->paginate(25);
         return $result;
     }
 }

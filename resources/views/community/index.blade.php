@@ -46,6 +46,6 @@
     </div>
 
 </div>
-
+{{ $links->appends($_GET)->links() }}
 
 @stop

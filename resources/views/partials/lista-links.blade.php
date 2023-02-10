@@ -27,6 +27,8 @@
             {{$link->title}}
         </a>
 
+
+
         <small>Contributed by: {{$link->creator->name}} {{$link->updated_at->diffForHumans()}}</small>
 
         <form method="POST" action="/community/votes/{{ $link->id }}">
@@ -35,6 +37,8 @@
                 {{$link->users()->count()}}
             </button>
         </form>
-    </li>
+    </li>       
+    
+    
 </div>
 @endforeach
