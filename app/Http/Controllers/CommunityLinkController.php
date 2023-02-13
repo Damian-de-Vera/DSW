@@ -23,6 +23,12 @@ class CommunityLinkController extends Controller
     {
         $query = new CommunityLinksQuery();
 
+        if ($_GET) {
+            $busqueda = $_GET["busqueda"];
+        } else {
+            $busqueda = null;
+        }
+
         $channels = Channel::orderBy('title', 'asc')->get();
         if ($channel) {
             $token = 1;
@@ -31,10 +37,10 @@ class CommunityLinkController extends Controller
 
                 $links = $query->getByChannelAndMostPopular($channel);
 
-                return view('community/index', compact('links', 'channels', 'token'));
+                return view('community/index', compact('links', 'channels', 'token', 'busqueda'));
             } else {
                 $links = $query->getByChannel($channel);
-                return view('community/index', compact('links', 'channels', 'token'));
+                return view('community/index', compact('links', 'channels', 'token', 'busqueda'));
             }
         } else {
             $token = 0;
@@ -42,11 +48,11 @@ class CommunityLinkController extends Controller
 
                 $links = $query->getMostPopular();
 
-                return view('community/index', compact('links', 'channels', 'token'));
+                return view('community/index', compact('links', 'channels', 'token', 'busqueda'));
             } else {
 
                 $links = $query->getAll();
-                return view('community/index', compact('links', 'channels', 'token'));
+                return view('community/index', compact('links', 'channels', 'token', 'busqueda'));
             }
         }
     }

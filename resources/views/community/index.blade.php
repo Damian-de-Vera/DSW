@@ -16,9 +16,9 @@
 
 
             <a class="margin-a enlace" href="/community" target="_blank">
-                <h1>Community</h1>
+                <h2>Community</h2>
             </a>
-            @if ($token == 1) <h1> {{$links[0]->channel->title}}</h1>@endif
+            @if ($token == 1) <h3> {{$links[0]->channel->title}}</h3>@endif
 
             </span>
             @if(count($links) == 0)
