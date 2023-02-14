@@ -30,4 +30,10 @@ class CommunityLinksQuery
         $result = CommunityLink::where('approved', true)->withCount('users')->orderBy('users_count', 'desc')->paginate(25);
         return $result;
     }
+    public function getSearch($busqueda)
+    {
+        $result = CommunityLink::where('approved', true)
+            ->where('title', 'LIKE', '%' . $busqueda . '%')->paginate(25);
+        return $result;
+    }
 }
