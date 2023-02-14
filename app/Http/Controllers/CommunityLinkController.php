@@ -23,8 +23,9 @@ class CommunityLinkController extends Controller
     {
         $query = new CommunityLinksQuery();
 
+
         if (isset($_GET["busqueda"])) {
-            $busqueda = htmlspecialchars(($_GET["busqueda"]));
+            $busqueda = htmlspecialchars($_GET["busqueda"]);
         }
 
         $channels = Channel::orderBy('title', 'asc')->get();

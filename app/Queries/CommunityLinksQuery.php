@@ -32,6 +32,8 @@ class CommunityLinksQuery
     }
     public function getSearch($busqueda)
     {
+        $busqueda = str_replace("+", "", $busqueda);
+        $busqueda = str_replace(" ", "", $busqueda);
         $result = CommunityLink::where('approved', true)
             ->where('title', 'LIKE', '%' . $busqueda . '%')->paginate(25);
         return $result;
